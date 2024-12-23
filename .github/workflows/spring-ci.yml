@@ -1,4 +1,4 @@
-name: Java Spring CI
+name: Java Spring MVC CI
 
 on:
   push:
@@ -24,10 +24,17 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # 3. Сборка проекта с помощью Maven
-      - name: Build with Maven
+      # 3. Сборка проекта с Maven
+      - name: Build the project
         run: mvn clean package
 
-      # 4. Запуск тестов
+      # 4. Запуск модульных тестов
       - name: Run tests
         run: mvn test
+
+      # 5. Сохранение артефакта сборки (JAR-файла)
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: spring-mvc-app
+          path: target/*.jar
